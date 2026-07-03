@@ -86,7 +86,7 @@
                         @endcan
 
                         @can('manage servers')
-                            <a href="#" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a href="{{ route('admin.servers.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.servers.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                                 <span class="mr-3">🖥️</span>
                                 Servers
                             </a>

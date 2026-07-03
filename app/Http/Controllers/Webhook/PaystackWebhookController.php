@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Webhook;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Jobs\ProvisionHostingAccount;
 use App\Notifications\PaymentReceived;
 use App\Services\Integrations\Paystack\PaystackClient;
 use App\Services\PaymentGateway;
@@ -44,6 +45,11 @@ class PaystackWebhookController extends Controller
 
                     if ($invoice->customer->user) {
                         $invoice->customer->user->notify(new PaymentReceived($invoice, $transaction));
+                    }
+
+                    // Dispatch provisioning for hosting products
+                    if ($invoice->order) {
+                        ProvisionHostingAccount::dispatch($invoice->order);
                     }
                 }
             }

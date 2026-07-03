@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Webhook;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Transaction;
+use App\Jobs\ProvisionHostingAccount;
+use App\Models\Order;
 use App\Notifications\PaymentReceived;
 use App\Services\Integrations\Stripe\StripeClient;
 use App\Services\PaymentGateway;
@@ -44,6 +46,11 @@ class StripeWebhookController extends Controller
 
                     if ($invoice->customer->user) {
                         $invoice->customer->user->notify(new PaymentReceived($invoice, $transaction));
+                    }
+
+                    // Dispatch provisioning for hosting products
+                    if ($invoice->order) {
+                        ProvisionHostingAccount::dispatch($invoice->order);
                     }
                 }
             }

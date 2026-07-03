@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProvisionHostingAccount;
 use App\Models\Invoice;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -41,6 +42,11 @@ class InvoiceController extends Controller
             'currency' => $invoice->currency,
             'status' => 'succeeded',
         ]);
+
+        // Dispatch provisioning for hosting products
+        if ($invoice->order) {
+            ProvisionHostingAccount::dispatch($invoice->order);
+        }
 
         return redirect()->route('admin.invoices.show', $invoice)
             ->with('success', 'Invoice marked as paid successfully.');
