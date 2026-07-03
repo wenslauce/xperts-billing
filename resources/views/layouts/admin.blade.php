@@ -93,14 +93,21 @@
                         @endcan
 
                         @can('manage tickets')
-                            <a href="#" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a href="{{ route('admin.tickets.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.tickets.*') || request()->routeIs('admin.ticket-departments.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                                 <span class="mr-3">🎫</span>
                                 Tickets
                             </a>
                         @endcan
 
+                        @can('manage domains')
+                            <a href="{{ route('admin.domains.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.domains.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                                <span class="mr-3">🌐</span>
+                                Domains
+                            </a>
+                        @endcan
+
                         @can('manage reports')
-                            <a href="#" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a href="{{ route('admin.reports.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.reports.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                                 <span class="mr-3">📈</span>
                                 Reports
                             </a>
