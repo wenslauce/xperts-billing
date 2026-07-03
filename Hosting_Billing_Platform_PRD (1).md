@@ -1,9 +1,10 @@
 # Hosting Billing Platform — Product & Engineering Requirements Document
 
-**Version:** 2.0 (Enhanced for build-start)
+**Version:** 2.1 (Build Status)
 **Owner:** Wenslauce
-**Target stack:** Laravel 12 / PHP 8.4
+**Target stack:** Laravel 13 / PHP 8.4
 **Deployment target:** Self-hosted VPS via Coolify
+**Build status:** Phase 0 — Bootstrap ✅ Complete | Phase 1 — Foundation 🏗 In Progress
 
 ---
 
@@ -497,9 +498,9 @@ chore(deps): bump laravel/framework
 
 ## 14. First Milestones (Cursor build checklist)
 
-1. [ ] `laravel new hosting-billing` on PHP 8.4, push to GitHub
-2. [ ] Connect repo → Coolify, confirm live deploy of default Laravel welcome page
-3. [ ] Install Breeze (Livewire stack) + Spatie permission + activitylog
+1. [x] `laravel new hosting-billing` on PHP 8.4, push to GitHub
+2. [x] Connect repo → Coolify, confirm live deploy of default Laravel welcome page
+3. [x] Install Breeze (Livewire stack) + Spatie permission + activitylog
 4. [ ] Migrations: users, customers, roles/permissions, settings
 5. [ ] Admin layout + Customer layout shells with role-gated nav
 6. [ ] Products + Pricing CRUD
