@@ -39,9 +39,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --no-progress --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-dev --no-interaction --no-progress --optimize-autoloader --ignore-platform-reqs --no-scripts
 
 COPY . .
+
+RUN php artisan package:discover --ansi || true
 
 RUN npm ci && npm run build
 
