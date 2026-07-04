@@ -11,8 +11,12 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     libxml2-dev \
+    libpng-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
     mysql-client \
     redis \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
     pdo \
     pdo_mysql \
@@ -53,7 +57,11 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev \
     libxml2-dev \
+    libpng-dev \
+    freetype-dev \
+    libjpeg-turbo-dev \
     mysql-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
     pdo \
     pdo_mysql \
