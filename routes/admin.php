@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\TicketDepartmentController;
 use App\Http\Controllers\Admin\DomainController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\TldPriceController;
+use App\Http\Controllers\Admin\CustomerController;
 
 Route::middleware(['auth', 'verified', 'role:super-admin|admin|support|billing'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -49,6 +51,20 @@ Route::middleware(['auth', 'verified', 'role:super-admin|admin|support|billing']
     Route::put('/ticket-departments/{ticketDepartment}', [TicketDepartmentController::class, 'update'])->name('ticket-departments.update')->middleware('can:manage tickets');
     Route::delete('/ticket-departments/{ticketDepartment}', [TicketDepartmentController::class, 'destroy'])->name('ticket-departments.destroy')->middleware('can:manage tickets');
 
+    // Customers
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index')->middleware('can:manage customers');
+    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create')->middleware('can:manage customers');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store')->middleware('can:manage customers');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show')->middleware('can:manage customers');
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit')->middleware('can:manage customers');
+    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update')->middleware('can:manage customers');
+    Route::post('/customers/{customer}/impersonate', [CustomerController::class, 'impersonate'])->name('customers.impersonate')->middleware('can:impersonate customers');
+
+    // API for order creation
+    Route::get('/api/products/{product}/pricing', function (\App\Models\Product $product) {
+        return $product->pricing()->get(['id', 'billing_cycle', 'price', 'currency']);
+    })->middleware('can:manage orders');
+
     // Domains
     Route::get('/domains', [DomainController::class, 'index'])->name('domains.index')->middleware('can:manage domains');
     Route::get('/domains/create', [DomainController::class, 'create'])->name('domains.create')->middleware('can:manage domains');
@@ -56,6 +72,10 @@ Route::middleware(['auth', 'verified', 'role:super-admin|admin|support|billing']
     Route::get('/domains/{domain}/edit', [DomainController::class, 'edit'])->name('domains.edit')->middleware('can:manage domains');
     Route::put('/domains/{domain}', [DomainController::class, 'update'])->name('domains.update')->middleware('can:manage domains');
     Route::delete('/domains/{domain}', [DomainController::class, 'destroy'])->name('domains.destroy')->middleware('can:manage domains');
+
+    // TLD Prices
+    Route::resource('tld-prices', TldPriceController::class)->parameters(['tld-price' => 'tldPrice'])->middleware('can:manage domains');
+    Route::post('/tld-prices/bulk-update', [TldPriceController::class, 'bulkUpdate'])->name('tld-prices.bulk-update')->middleware('can:manage domains');
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index')->middleware('can:manage reports');
@@ -67,4 +87,12 @@ Route::middleware(['auth', 'verified', 'role:super-admin|admin|support|billing']
     // Settings
     Route::get('/settings/payments', [SettingsController::class, 'payments'])->name('settings.payments')->middleware('role:super-admin');
     Route::post('/settings/payments', [SettingsController::class, 'updatePayments'])->name('settings.payments.update')->middleware('role:super-admin');
+
+    // Registrar Settings
+    Route::get('/settings/registrars', [SettingsController::class, 'registrars'])->name('settings.registrars')->middleware('role:super-admin');
+    Route::post('/settings/registrars', [SettingsController::class, 'updateRegistrars'])->name('settings.registrars.update')->middleware('role:super-admin');
+
+    // Email Piping Settings
+    Route::get('/settings/email-piping', [SettingsController::class, 'emailPiping'])->name('settings.email-piping')->middleware('role:super-admin');
+    Route::post('/settings/email-piping', [SettingsController::class, 'updateEmailPiping'])->name('settings.email-piping.update')->middleware('role:super-admin');
 });

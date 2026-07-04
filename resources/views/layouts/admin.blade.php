@@ -51,7 +51,7 @@
                         @endcan
 
                         @can('manage customers')
-                            <a href="#" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <a href="{{ route('admin.customers.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.customers.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                                 <span class="mr-3">👥</span>
                                 Customers
                             </a>
@@ -100,9 +100,13 @@
                         @endcan
 
                         @can('manage domains')
-                            <a href="{{ route('admin.domains.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.domains.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                            <a href="{{ route('admin.domains.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.domains.*') && !request()->routeIs('admin.tld-prices.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
                                 <span class="mr-3">🌐</span>
                                 Domains
+                            </a>
+                            <a href="{{ route('admin.tld-prices.index') }}" class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('admin.tld-prices.*') ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                                <span class="mr-3">💰</span>
+                                TLD Prices
                             </a>
                         @endcan
 
