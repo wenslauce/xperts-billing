@@ -16,6 +16,8 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     mysql-client \
     redis \
+    icu-dev \
+    icu-libs \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
     pdo \
@@ -61,6 +63,8 @@ RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
     mysql-client \
+    icu-dev \
+    icu-libs \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
     pdo \
