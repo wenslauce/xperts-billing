@@ -4,31 +4,32 @@ namespace App\Services\Integrations\DomainRegistrars;
 
 use Illuminate\Support\Facades\Http;
 
-class NameSiloClient implements RegistrarInterface
+class ResellerClubClient implements RegistrarInterface
 {
     protected string $apiKey;
+    protected string $userId;
     protected string $endpoint;
     protected bool $testMode;
 
     public function __construct(array $config)
     {
         $this->apiKey = $config['api_key'] ?? '';
-        $this->endpoint = $config['endpoint'] ?? 'https://www.namesilo.com/api';
+        $this->userId = $config['user_id'] ?? '';
+        $this->endpoint = $config['endpoint'] ?? 'https://test.httpapi.com/api';
         $this->testMode = $config['test_mode'] ?? true;
     }
 
     protected function baseParams(): array
     {
         return [
-            'version' => 1,
-            'type' => 'json',
-            'key' => $this->apiKey,
+            'auth-userid' => $this->userId,
+            'api-key' => $this->apiKey,
         ];
     }
 
     protected function get(string $command, array $params = []): array
     {
-        $response = Http::get("{$this->endpoint}/{$command}", array_merge($this->baseParams(), $params));
+        $response = Http::get("{$this->endpoint}/{$command}.json", array_merge($this->baseParams(), $params));
 
         if (! $response->successful()) {
             return ['status' => 'FAILURE', 'detail' => 'API request failed'];
@@ -39,100 +40,82 @@ class NameSiloClient implements RegistrarInterface
 
     public function checkDomain(string $domain): array
     {
-        $data = $this->get('checkRegisterDomain', ['domain' => $domain]);
+        $data = $this->get('domains/available', [
+            'domain-name' => $domain,
+            'tlds' => explode('.', $domain)[1] ?? 'com',
+        ]);
 
-        $reply = $data['reply'] ?? [];
+        $status = $data[$domain] ?? [];
 
         return [
-            'available' => ($reply['available'] ?? 'no') === 'yes',
+            'available' => ($status['status'] ?? '') === 'available',
             'domain' => $domain,
-            'status' => $reply['available'] ?? 'no',
-            'price' => $reply['price'] ?? null,
+            'status' => $status['status'] ?? 'unknown',
+            'price' => $status['price'] ?? null,
         ];
     }
 
     public function register(string $domain, int $years = 1, array $contacts = []): array
     {
+        $parts = explode('.', $domain, 2);
+        $sld = $parts[0];
+        $tld = $parts[1] ?? 'com';
+
         $params = [
-            'domain' => $domain,
+            'domain-name' => $sld,
+            'tld' => $tld,
             'years' => $years,
-            'fn' => $contacts['first_name'] ?? '',
-            'ln' => $contacts['last_name'] ?? '',
-            'ad' => $contacts['address'] ?? '',
-            'cy' => $contacts['city'] ?? '',
-            'st' => $contacts['state'] ?? '',
-            'zp' => $contacts['postal_code'] ?? '',
-            'ct' => $contacts['country'] ?? 'KE',
-            'em' => $contacts['email'] ?? '',
-            'ph' => $contacts['phone'] ?? '',
+            'ns' => $contacts['nameservers'] ?? ['ns1.xpertsafrica.com', 'ns2.xpertsafrica.com'],
+            'customer-id' => $contacts['customer_id'] ?? '',
+            'reg-contact-id' => $contacts['reg_contact_id'] ?? '',
+            'admin-contact-id' => $contacts['admin_contact_id'] ?? '',
+            'tech-contact-id' => $contacts['tech_contact_id'] ?? '',
+            'billing-contact-id' => $contacts['billing_contact_id'] ?? '',
+            'invoice-option' => 'NoInvoice',
+            'protect-privacy' => false,
         ];
 
-        if (! empty($contacts['nameservers'])) {
-            foreach ($contacts['nameservers'] as $i => $ns) {
-                $params['ns' . ($i + 1)] = $ns;
-            }
-        }
-
-        // Default nameservers if none provided
-        if (empty($contacts['nameservers'])) {
-            $params['ns1'] = 'ns1.xpertsafrica.com';
-            $params['ns2'] = 'ns2.xpertsafrica.com';
-        }
-
-        $data = $this->get('registerDomain', $params);
-        $reply = $data['reply'] ?? [];
+        $data = $this->get('domains/register', $params);
 
         return [
-            'success' => ($reply['status'] ?? 'FAILURE') === 'SUCCESS',
+            'success' => isset($data['status']) && $data['status'] === 'Success',
             'domain' => $domain,
-            'order_id' => $reply['order_id'] ?? null,
+            'order_id' => $data['orderid'] ?? null,
             'raw' => $data,
         ];
     }
 
     public function renew(string $domain, int $years = 1): array
     {
-        $data = $this->get('renewDomain', [
-            'domain' => $domain,
+        $data = $this->get('domains/renew', [
+            'domain-name' => $domain,
             'years' => $years,
+            'invoice-option' => 'NoInvoice',
         ]);
 
-        $reply = $data['reply'] ?? [];
-
         return [
-            'success' => ($reply['status'] ?? 'FAILURE') === 'SUCCESS',
+            'success' => isset($data['status']) && $data['status'] === 'Success',
             'domain' => $domain,
-            'order_id' => $reply['order_id'] ?? null,
+            'order_id' => $data['orderid'] ?? null,
             'raw' => $data,
         ];
     }
 
     public function getNameservers(string $domain): array
     {
-        $data = $this->get('getDomainInfo', ['domain' => $domain]);
-        $reply = $data['reply'] ?? [];
+        $data = $this->get('domains/details', ['domain-name' => $domain]);
+        $ns = $data['nameservers'] ?? [];
 
-        $ns = [];
-        foreach (['ns1', 'ns2', 'ns3', 'ns4', 'ns5', 'ns6', 'ns7', 'ns8', 'ns9', 'ns10', 'ns11', 'ns12', 'ns13'] as $key) {
-            if (! empty($reply[$key])) {
-                $ns[] = $reply[$key];
-            }
-        }
-
-        return $ns;
+        return is_array($ns) ? $ns : [];
     }
 
     public function setNameservers(string $domain, array $nameservers): bool
     {
-        $params = ['domain' => $domain];
+        $data = $this->get('domains/modify-ns', [
+            'domain-name' => $domain,
+            'ns' => $nameservers,
+        ]);
 
-        foreach ($nameservers as $i => $ns) {
-            $params['ns' . ($i + 1)] = $ns;
-        }
-
-        $data = $this->get('changeNameServers', $params);
-        $reply = $data['reply'] ?? [];
-
-        return ($reply['status'] ?? 'FAILURE') === 'SUCCESS';
+        return isset($data['status']) && $data['status'] === 'Success';
     }
 }
