@@ -54,20 +54,18 @@ RUN chmod -R 777 storage bootstrap/cache
 
 FROM php:8.4-fpm-alpine
 
-# stage-1 only needs nginx, supervisor, curl, and runtime library deps
-# PHP extensions are already compiled and bundled in php:8.4-fpm-alpine base image
+# stage-1 only needs nginx, supervisor, curl, and mysql-client
+# All PHP extensions (including redis) are copied from build stage
 RUN apk add --no-cache \
     nginx \
     supervisor \
     curl \
-    mysql-client \
-    && pecl install redis \
-    && docker-php-ext-enable redis
+    mysql-client
 
 COPY --from=build /app /app
 COPY --from=build /usr/bin/composer /usr/bin/composer
 
-# Copy compiled PHP extensions from build stage to avoid recompilation
+# Copy all compiled PHP extensions from build stage (including redis)
 COPY --from=build /usr/local/lib/php/extensions /usr/local/lib/php/extensions
 COPY --from=build /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
 
