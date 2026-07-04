@@ -54,37 +54,22 @@ RUN chmod -R 777 storage bootstrap/cache
 
 FROM php:8.4-fpm-alpine
 
+# stage-1 only needs nginx, supervisor, curl, and runtime library deps
+# PHP extensions are already compiled and bundled in php:8.4-fpm-alpine base image
 RUN apk add --no-cache \
     nginx \
-    curl \
     supervisor \
-    libzip-dev \
-    oniguruma-dev \
-    libxml2-dev \
-    libpng-dev \
-    freetype-dev \
-    libjpeg-turbo-dev \
+    curl \
     mysql-client \
-    icu-dev \
-    icu-libs \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-    pdo \
-    pdo_mysql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    zip \
-    intl \
-    opcache \
-    && apk add --no-cache $PHPIZE_DEPS \
     && pecl install redis \
     && docker-php-ext-enable redis
 
 COPY --from=build /app /app
 COPY --from=build /usr/bin/composer /usr/bin/composer
+
+# Copy compiled PHP extensions from build stage to avoid recompilation
+COPY --from=build /usr/local/lib/php/extensions /usr/local/lib/php/extensions
+COPY --from=build /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/app.ini
