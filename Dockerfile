@@ -45,6 +45,7 @@ COPY . .
 
 RUN npm ci && npm run build
 
+# Generate APP_KEY for the build - this is just to enable config caching
 RUN cp .env.example .env \
     && php artisan key:generate \
     && php artisan storage:link || true
@@ -56,6 +57,7 @@ FROM php:8.4-fpm-alpine
 RUN apk add --no-cache \
     nginx \
     curl \
+    supervisor \
     libzip-dev \
     oniguruma-dev \
     libxml2-dev \
@@ -86,12 +88,13 @@ COPY --from=build /usr/bin/composer /usr/bin/composer
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /app
 
 RUN chmod -R 777 storage bootstrap/cache \
-    && mkdir -p /var/log/nginx /var/cache/nginx
+    && mkdir -p /var/log/nginx /var/cache/nginx /var/log/supervisor /var/run
 
 EXPOSE 80
 
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

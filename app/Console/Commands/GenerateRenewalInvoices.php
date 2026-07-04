@@ -44,7 +44,7 @@ class GenerateRenewalInvoices extends Command
                 'status' => 'awaiting_payment',
                 'total' => $service->orderItem->unit_price,
                 'currency' => $service->orderItem->pricing->currency ?? 'KES',
-                'notes' => 'Renewal for ' . ($service->product->name ?? 'Service') . ' (' . $service->domain ?? 'N/A' . ')',
+                'notes' => 'Renewal for ' . ($service->product->name ?? 'Service') . ' (' . ($service->domain ?? 'N/A') . ')',
             ]);
 
             \App\Models\OrderItem::create([
