@@ -13,4 +13,4 @@ cmds = [
 cmds = ["npm run build"]
 
 [start]
-cmd = "php-fpm -y /assets/php-fpm.conf & nginx -c /nginx.conf"
+cmd = "node /assets/scripts/prestart.mjs /assets/nginx.template.conf /nginx.conf && (php-fpm -y /assets/php-fpm.conf & nginx -c /nginx.conf)"
