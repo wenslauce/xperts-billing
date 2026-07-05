@@ -74,12 +74,14 @@ COPY --from=build /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 WORKDIR /app
 
 RUN chmod -R 777 storage bootstrap/cache \
-    && mkdir -p /var/log/nginx /var/cache/nginx /var/log/supervisor /var/run
+    && mkdir -p /var/log/nginx /var/cache/nginx /var/log/supervisor /var/run \
+    && chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 80
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
