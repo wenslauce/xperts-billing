@@ -1,12 +1,13 @@
 #!/bin/sh
 set -e
 
-# Wait for MySQL to be ready
+# Wait for database to be ready
 echo "Waiting for database connection..."
-until php artisan db:monitor --timeout=60 2>/dev/null; do
+until php artisan db:monitor 2>/dev/null; do
     echo "Database not ready, waiting 5 seconds..."
     sleep 5
 done
+echo "Database connection established."
 
 # Run migrations
 echo "Running database migrations..."
