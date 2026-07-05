@@ -1,10 +1,12 @@
-FROM php:8.4-fpm-alpine AS build
+FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache \
     nginx \
+    supervisor \
+    curl \
+    mysql-client \
     nodejs \
     npm \
-    curl \
     git \
     zip \
     unzip \
@@ -14,13 +16,11 @@ RUN apk add --no-cache \
     libpng-dev \
     freetype-dev \
     libjpeg-turbo-dev \
-    mysql-client \
-    redis \
     icu-dev \
     icu-libs \
+    $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
-    pdo \
     pdo_mysql \
     mbstring \
     exif \
@@ -30,9 +30,9 @@ RUN apk add --no-cache \
     zip \
     intl \
     opcache \
-    && apk add --no-cache $PHPIZE_DEPS \
     && pecl install redis \
-    && docker-php-ext-enable redis
+    && docker-php-ext-enable redis \
+    && apk del $PHPIZE_DEPS
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -47,39 +47,14 @@ RUN php artisan package:discover --ansi || true
 
 RUN npm ci && npm run build
 
-# Generate APP_KEY for the build - this is just to enable config caching
-RUN cp .env.example .env \
-    && php artisan key:generate \
-    && php artisan storage:link || true
-
 RUN chmod -R 777 storage bootstrap/cache
-
-FROM php:8.4-fpm-alpine
-
-# stage-1 only needs nginx, supervisor, curl, and mysql-client
-# All PHP extensions (including redis) are copied from build stage
-RUN apk add --no-cache \
-    nginx \
-    supervisor \
-    curl \
-    mysql-client
-
-COPY --from=build /app /app
-COPY --from=build /usr/bin/composer /usr/bin/composer
-
-# Copy all compiled PHP extensions from build stage (including redis)
-COPY --from=build /usr/local/lib/php/extensions /usr/local/lib/php/extensions
-COPY --from=build /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
-WORKDIR /app
-
-RUN chmod -R 777 storage bootstrap/cache \
-    && mkdir -p /var/log/nginx /var/cache/nginx /var/log/supervisor /var/run \
+RUN mkdir -p /var/log/nginx /var/cache/nginx /var/log/supervisor /var/run \
     && chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 80
