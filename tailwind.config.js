@@ -14,6 +14,16 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                xperts: {
+                    orange: '#f05622',
+                    'orange-dark': '#d0481d',
+                    'orange-light': '#f26a3e',
+                    slate: '#1e293b',
+                    'slate-light': '#334155',
+                    'slate-dark': '#0f172a',
+                },
+            },
         },
     },
 

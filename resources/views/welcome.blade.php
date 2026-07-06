@@ -10,16 +10,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .gradient-text { background: linear-gradient(135deg, #7c3aed, #a855f7, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .gradient-btn { background: linear-gradient(135deg, #7c3aed, #a855f7); }
-        .gradient-btn:hover { background: linear-gradient(135deg, #6d28d9, #9333ea); }
-        .hero-gradient { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%); }
+        .gradient-text { background: linear-gradient(135deg, #f05622, #f26a3e, #f05622); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .gradient-btn { background: linear-gradient(135deg, #f05622, #d0481d); }
+        .gradient-btn:hover { background: linear-gradient(135deg, #d0481d, #b03a15); }
+        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); }
         .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(240, 86, 34, 0.15); }
         .animate-float { animation: float 6s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
         .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
         @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        .xperts-badge { background: linear-gradient(135deg, rgba(240, 86, 34, 0.15), rgba(240, 86, 34, 0.05)); border: 1px solid rgba(240, 86, 34, 0.25); }
     </style>
 </head>
 <body class="font-sans antialiased bg-white text-slate-800">
@@ -33,16 +34,16 @@
                     </a>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="/domains" class="text-sm font-medium text-slate-600 hover:text-purple-600 transition">Domains</a>
-                    <a href="/hosting" class="text-sm font-medium text-slate-600 hover:text-purple-600 transition">Hosting</a>
-                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-purple-600 transition">Features</a>
-                    <a href="#pricing" class="text-sm font-medium text-slate-600 hover:text-purple-600 transition">Pricing</a>
+                    <a href="/domains" class="text-sm font-medium text-slate-600 hover:text-xperts-orange transition">Domains</a>
+                    <a href="/hosting" class="text-sm font-medium text-slate-600 hover:text-xperts-orange transition">Hosting</a>
+                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-xperts-orange transition">Features</a>
+                    <a href="#pricing" class="text-sm font-medium text-slate-600 hover:text-xperts-orange transition">Pricing</a>
                 </div>
                 <div class="flex items-center space-x-3">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="text-sm font-medium text-slate-600 hover:text-purple-600">Dashboard</a>
+                        <a href="{{ route('dashboard') }}" class="text-sm font-medium text-slate-600 hover:text-xperts-orange">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-slate-600 hover:text-purple-600">Login</a>
+                        <a href="{{ route('login') }}" class="text-sm font-medium text-slate-600 hover:text-xperts-orange">Login</a>
                         <a href="{{ route('register') }}" class="gradient-btn text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition">Get Started</a>
                     @endauth
                 </div>
@@ -53,14 +54,14 @@
     {{-- Hero Section --}}
     <section class="hero-gradient min-h-screen pt-16 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-20 right-20 w-96 h-96 bg-pink-500 rounded-full blur-3xl"></div>
+            <div class="absolute top-20 left-20 w-72 h-72 bg-xperts-orange rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-xperts-orange rounded-full blur-3xl"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="space-y-8">
                     <div>
-                        <span class="inline-flex items-center px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm font-medium">
+                        <span class="inline-flex items-center px-4 py-2 rounded-full xperts-badge text-xperts-orange text-sm font-medium">
                             Africa's Premier Digital Services Provider
                         </span>
                     </div>
@@ -70,11 +71,11 @@
                     </h1>
                     <p class="text-xl text-slate-300">Domains, hosting, and web development solutions tailored for African businesses. 99.9% uptime, 24/7 support.</p>
                     <div class="flex flex-wrap gap-4">
-                        <a href="{{ route('register') }}" class="gradient-btn text-white px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-purple-500/25 transition-all flex items-center gap-2">
+                        <a href="{{ route('register') }}" class="gradient-btn text-white px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-xperts-orange/25 transition-all flex items-center gap-2">
                             Get Started
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </a>
-                        <a href="/hosting" class="border-2 border-purple-500/50 text-white px-8 py-3 rounded-lg font-medium hover:bg-purple-500/10 transition-all">Explore Hosting</a>
+                        <a href="/hosting" class="border-2 border-xperts-orange/50 text-white px-8 py-3 rounded-lg font-medium hover:bg-xperts-orange/10 transition-all">Explore Hosting</a>
                     </div>
                     <div class="flex items-center gap-8 text-slate-400 text-sm">
                         <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quick Setup</div>
@@ -83,7 +84,7 @@
                     </div>
                 </div>
                 <div class="relative animate-float">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-3xl blur-3xl"></div>
+                    <div class="absolute -inset-4 bg-gradient-to-r from-xperts-orange/20 to-xperts-orange-light/20 rounded-3xl blur-3xl"></div>
                     <div class="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
                         <div class="text-center">
                             <div class="text-8xl mb-4">🚀</div>
@@ -100,14 +101,14 @@
     <section class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <span class="px-4 py-1.5 rounded-full bg-purple-100 text-purple-600 text-sm font-medium">Domain Search</span>
+                <span class="px-4 py-1.5 rounded-full xperts-badge text-xperts-orange text-sm font-medium">Domain Search</span>
                 <h2 class="text-4xl font-bold mt-4 gradient-text">Find Your Perfect Domain</h2>
                 <p class="text-slate-600 mt-2">Search for available domains and secure your online presence.</p>
             </div>
             <div class="max-w-3xl mx-auto">
                 <form action="{{ route('domain.check') }}" method="GET" class="bg-white rounded-2xl shadow-xl p-6 border border-slate-200">
                     <div class="flex gap-3">
-                        <input type="text" name="domain" placeholder="Enter your domain name" value="{{ request('domain') }}" class="flex-1 px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none" required>
+                        <input type="text" name="domain" placeholder="Enter your domain name" value="{{ request('domain') }}" class="flex-1 px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-xperts-orange focus:border-xperts-orange outline-none" required>
                         <button type="submit" class="gradient-btn text-white px-8 py-3 rounded-lg font-medium hover:shadow-lg transition">Search</button>
                     </div>
                 </form>
@@ -119,7 +120,7 @@
                             <div>
                                 <h3 class="text-xl font-bold">{{ $result['domain'] }}</h3>
                                 @if($result['available'] ?? false)
-                                    <p class="text-green-600 font-medium mt-1">✅ Available! <a href="{{ route('register') }}" class="text-purple-600 hover:underline">Register now</a></p>
+                                    <p class="text-green-600 font-medium mt-1">✅ Available! <a href="{{ route('register') }}" class="text-xperts-orange hover:underline">Register now</a></p>
                                 @else
                                     <p class="text-red-600 font-medium mt-1">❌ Already registered</p>
                                     <p class="text-sm text-slate-500 mt-1">Expires: {{ $result['expires'] ?? 'N/A' }}</p>
@@ -152,28 +153,28 @@
     <section id="features" class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <span class="px-4 py-1.5 rounded-full bg-purple-100 text-purple-600 text-sm font-medium">Our Services</span>
+                <span class="px-4 py-1.5 rounded-full xperts-badge text-xperts-orange text-sm font-medium">Our Services</span>
                 <h2 class="text-4xl font-bold mt-4 gradient-text">Comprehensive Digital Solutions</h2>
                 <p class="text-slate-600 mt-2">Everything you need to succeed online.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="card-hover bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
-                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <div class="w-14 h-14 bg-xperts-orange/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-xperts-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Web Hosting</h3>
                     <p class="text-slate-600">Fast, secure, and reliable hosting with 99.9% uptime guarantee and 24/7 expert support.</p>
                 </div>
                 <div class="card-hover bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
-                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    <div class="w-14 h-14 bg-xperts-orange/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-xperts-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Domain Registration</h3>
                     <p class="text-slate-600">Register and manage domains with free WHOIS privacy protection and DNS management.</p>
                 </div>
                 <div class="card-hover bg-white rounded-2xl p-8 border border-slate-200 shadow-lg">
-                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    <div class="w-14 h-14 bg-xperts-orange/10 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-xperts-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Web Development</h3>
                     <p class="text-slate-600">Custom websites and web applications built with modern technologies for your business.</p>
@@ -186,7 +187,7 @@
     <section id="pricing" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <span class="px-4 py-1.5 rounded-full bg-purple-100 text-purple-600 text-sm font-medium">Hosting Plans</span>
+                <span class="px-4 py-1.5 rounded-full xperts-badge text-xperts-orange text-sm font-medium">Hosting Plans</span>
                 <h2 class="text-4xl font-bold mt-4 gradient-text">Powerful Hosting Solutions</h2>
                 <p class="text-slate-600 mt-2">Choose the perfect plan for your website.</p>
             </div>
@@ -204,7 +205,7 @@
                     </ul>
                     <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
                 </div>
-                <div class="bg-white rounded-2xl p-8 border-2 border-purple-500 shadow-xl card-hover relative">
+                <div class="bg-white rounded-2xl p-8 border-2 border-xperts-orange shadow-xl card-hover relative">
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 gradient-btn text-white px-4 py-1 rounded-full text-sm font-medium">Popular</div>
                     <h3 class="text-xl font-bold">Pro Plan</h3>
                     <div class="mt-4 mb-6">
@@ -238,12 +239,12 @@
     {{-- CTA --}}
     <section class="py-20 hero-gradient relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 left-10 w-64 h-64 bg-purple-500 rounded-full blur-3xl"></div>
+            <div class="absolute top-10 left-10 w-64 h-64 bg-xperts-orange rounded-full blur-3xl"></div>
         </div>
         <div class="relative max-w-4xl mx-auto text-center px-4">
             <h2 class="text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
             <p class="text-xl text-slate-300 mb-8">Join thousands of satisfied customers who trust us for their digital needs.</p>
-            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-3 rounded-lg font-medium hover:shadow-xl transition-all">
+            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 bg-white text-xperts-orange px-8 py-3 rounded-lg font-medium hover:shadow-xl transition-all">
                 Get Started Today
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
@@ -251,7 +252,7 @@
     </section>
 
     {{-- Footer --}}
-    <footer class="bg-slate-900 text-slate-400 py-16">
+    <footer class="bg-xperts-slate-dark text-slate-400 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>

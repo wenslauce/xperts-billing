@@ -3,7 +3,8 @@
 
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold gradient-text">Powerful Hosting Solutions</h2>
+            <span class="px-4 py-1.5 rounded-full bg-xperts-orange/10 text-xperts-orange text-sm font-medium border border-xperts-orange/25">Hosting Plans</span>
+            <h2 class="text-4xl font-bold mt-4 gradient-text">Powerful Hosting Solutions</h2>
             <p class="text-slate-600 mt-2">Choose the perfect hosting plan for your website.</p>
         </div>
 
@@ -22,7 +23,7 @@
                 <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border-2 border-purple-500 shadow-xl card-hover relative">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 border-2 border-xperts-orange shadow-xl card-hover relative">
                 <div class="absolute -top-4 left-1/2 -translate-x-1/2 gradient-btn text-white px-4 py-1 rounded-full text-sm font-medium">Popular</div>
                 <h3 class="text-xl font-bold dark:text-white">Pro Plan</h3>
                 <div class="mt-4 mb-6">
