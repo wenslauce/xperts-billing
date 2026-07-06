@@ -36,4 +36,12 @@ Route::get('/paystack/callback', [PaystackController::class, 'callback'])->name(
 Route::get('/auth/{provider}', [App\Http\Controllers\Auth\SocialLoginController::class, 'redirect'])->name('social.login');
 Route::get('/auth/{provider}/callback', [App\Http\Controllers\Auth\SocialLoginController::class, 'callback']);
 
+// Logout
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout')->middleware('auth');
+
 require __DIR__.'/auth.php';

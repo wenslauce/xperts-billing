@@ -20,7 +20,14 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $user = auth()->user();
+
+        // Redirect admins to admin dashboard, customers to regular dashboard
+        if ($user->hasAnyRole(['super-admin', 'admin', 'support', 'billing'])) {
+            $this->redirectIntended(default: route('admin.dashboard', absolute: false), navigate: true);
+        } else {
+            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        }
     }
 }; ?>
 

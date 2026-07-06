@@ -51,10 +51,10 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // Monthly revenue for current year
+        // Monthly revenue for current year (SQLite-compatible)
         $monthlyRevenue = Transaction::where('status', 'succeeded')
-            ->whereYear('created_at', now()->year)
-            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(amount) as total'))
+            ->whereRaw("strftime('%Y', created_at) = ?", [now()->year])
+            ->select(DB::raw("CAST(strftime('%m', created_at) AS INTEGER) as month"), DB::raw('SUM(amount) as total'))
             ->groupBy('month')
             ->orderBy('month')
             ->pluck('total', 'month');

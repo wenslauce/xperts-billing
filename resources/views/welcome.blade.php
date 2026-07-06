@@ -89,9 +89,9 @@
                     <div class="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-xperts-orange/10 shadow-xl">
                         <div class="text-center">
                             <div class="hero-image-container">
-                                @php $heroImage = public_path('images/hero-image.png'); @endphp
+                                @php $heroImage = public_path('images/hero.png'); @endphp
                                 @if(file_exists($heroImage))
-                                    <img src="{{ asset('images/hero-image.png') }}" alt="Xperts Africa Hosting" class="rounded-2xl shadow-lg">
+                                    <img src="{{ asset('images/hero.png') }}" alt="Xperts Africa Hosting" class="rounded-2xl shadow-lg">
                                 @else
                                     <div class="w-full aspect-video bg-gradient-to-br from-xperts-orange/5 to-xperts-orange/10 rounded-2xl flex items-center justify-center border border-xperts-orange/10">
                                         <div class="text-center p-8">
