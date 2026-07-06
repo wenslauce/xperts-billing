@@ -27,8 +27,8 @@
                         <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                         </button>
-                        <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold text-xperts-orange">
-                            {{ config('app.name') }}
+                        <a href="{{ route('admin.dashboard') }}">
+                            <img src="{{ asset('images/logos/logo-dark.png') }}" alt="{{ config('app.name') }}" class="h-8 w-auto">
                         </a>
                     </div>
                     <div class="flex items-center gap-4">
@@ -84,7 +84,7 @@
                         @endcan
 
                         @can('manage payments')
-                            <a href="{{ route('admin.invoices.index') }}" class="sidebar-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.invoices.index') }}" class="sidebar-link">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                                 <span>Payments</span>
                             </a>
@@ -109,7 +109,7 @@
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                                 <span>Domains</span>
                             </a>
-                            <a href="{{ route('admin.tld-prices.index') }}" class="sidebar-link {{ request()->routeIs('admin.tld-prices.*') ? 'active' : '' }} ml-6 text-xs">
+                            <a href="{{ route('admin.tld-prices.index') }}" class="sidebar-link {{ request()->routeIs('admin.tld-prices.*') ? 'active' : '' }} ml-6">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 <span>TLD Prices</span>
                             </a>
@@ -141,8 +141,8 @@
                 {{-- Overlay for mobile --}}
                 <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-20 bg-black/20 lg:hidden" style="display:none"></div>
 
-                {{-- Main Content --}}
-                <main :class="sidebarOpen ? 'ml-64' : 'ml-0'" class="flex-1 p-6 transition-all duration-200">
+                {{-- Main Content - margin-left matches sidebar width when open --}}
+                <main :style="sidebarOpen ? 'margin-left: 16rem' : 'margin-left: 0'" class="flex-1 p-6 transition-all duration-200 min-h-screen">
                     @if (isset($header))
                         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">{{ $header }}</h1>
                     @endif
