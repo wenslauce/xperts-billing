@@ -10,23 +10,51 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <style>
             .sidebar-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.625rem 0.75rem; font-size: 0.875rem; font-weight: 500; border-radius: 0.5rem; color: #64748b; transition: all 0.2s ease; }
             .sidebar-link:hover { background: rgba(240, 86, 34, 0.08); color: #f05622; }
             .sidebar-link.active { background: rgba(240, 86, 34, 0.12); color: #f05622; font-weight: 600; }
             .sidebar-link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+
+            /* Sidebar toggle: hidden checkbox + CSS only */
+            #sidebar-toggle { display: none; }
+            #sidebar { width: 16rem; transition: margin-left 0.3s ease; }
+            #main-content { margin-left: 16rem; transition: margin-left 0.3s ease; }
+
+            /* When checkbox is checked (sidebar collapsed) */
+            #sidebar-toggle:checked ~ #sidebar { margin-left: -16rem; }
+            #sidebar-toggle:checked ~ #main-content { margin-left: 0; }
+            #sidebar-toggle:checked ~ #sidebar-overlay { display: none; }
+
+            /* Mobile: sidebar as overlay */
+            @media (max-width: 1023px) {
+                #sidebar { position: fixed; left: 0; top: 4rem; bottom: 0; z-index: 30; margin-left: 0; }
+                #sidebar-toggle:checked ~ #sidebar { margin-left: -16rem; }
+                #main-content { margin-left: 0; }
+                #sidebar-overlay {
+                    display: block;
+                    position: fixed;
+                    inset: 0;
+                    z-index: 20;
+                    background: rgba(0,0,0,0.2);
+                    transition: opacity 0.3s ease;
+                }
+                #sidebar-toggle:checked ~ #sidebar-overlay { display: none !important; }
+            }
         </style>
     </head>
     <body class="font-sans antialiased">
-        <div x-data="{ sidebarOpen: true }" class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            {{-- Hidden checkbox for sidebar toggle --}}
+            <input type="checkbox" id="sidebar-toggle" checked>
+
             {{-- Top Navbar --}}
             <nav class="fixed top-0 left-0 right-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 h-16">
                 <div class="flex items-center justify-between h-full px-4 sm:px-6">
                     <div class="flex items-center gap-4">
-                        <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                        <label for="sidebar-toggle" class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition cursor-pointer">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                        </button>
+                        </label>
                         <a href="{{ route('admin.dashboard') }}">
                             <img src="{{ asset('images/logos/logo-dark.png') }}" alt="{{ config('app.name') }}" class="h-8 w-auto">
                         </a>
@@ -45,8 +73,8 @@
             </nav>
 
             <div class="flex pt-16">
-                {{-- Sidebar --}}
-                <aside x-show="sidebarOpen" x-transition:enter="transition-all duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" class="fixed left-0 top-16 bottom-0 z-30 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+                {{-- Sidebar (toggled by checkbox) --}}
+                <aside id="sidebar" class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto" style="min-height: calc(100vh - 4rem);">
                     <nav class="p-3 space-y-0.5">
                         @can('view dashboard')
                             <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
@@ -138,11 +166,11 @@
                     </nav>
                 </aside>
 
-                {{-- Overlay for mobile --}}
-                <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-20 bg-black/20 lg:hidden" style="display:none"></div>
+                {{-- Overlay for mobile (click to close sidebar) --}}
+                <label for="sidebar-toggle" id="sidebar-overlay" class="hidden"></label>
 
-                {{-- Main Content - margin-left matches sidebar width when open --}}
-                <main :style="sidebarOpen ? 'margin-left: 16rem' : 'margin-left: 0'" class="flex-1 p-6 transition-all duration-200 min-h-screen">
+                {{-- Main Content --}}
+                <main id="main-content" class="flex-1 p-6 min-h-screen">
                     @if (isset($header))
                         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">{{ $header }}</h1>
                     @endif
