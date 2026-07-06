@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Services\WhoisService;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,7 @@ class DomainCheckController extends Controller
 
     public function hosting()
     {
-        return view('hosting');
+        $hostingProducts = Product::with('pricing')->where('type', 'hosting')->where('is_active', true)->get();
+        return view('hosting', compact('hostingProducts'));
     }
 }

@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Checkout\StripeController;
 use App\Http\Controllers\Checkout\PaystackController;
 use App\Http\Controllers\DomainCheckController;
+use App\Models\Product;
 
-Route::get('/', fn () => view('welcome'));
+Route::get('/', function () {
+    $hostingProducts = Product::with('pricing')->where('type', 'hosting')->where('is_active', true)->get();
+    return view('welcome', compact('hostingProducts'));
+});
 Route::get('/hosting', [DomainCheckController::class, 'hosting'])->name('hosting');
 Route::get('/domains/check', [DomainCheckController::class, 'check'])->name('domain.check');
 

@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Xperts Billing') }} | Web Hosting & Domain Registration</title>
+    <title>{{ config('app.name', 'Xperts Africa') }} | Web Hosting & Domain Registration</title>
+    <meta name="description" content="Xperts Africa - Domains, hosting, and web development solutions tailored for African businesses. 99.9% uptime, 24/7 support.">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -13,19 +14,19 @@
         .gradient-text { background: linear-gradient(135deg, #f05622, #f26a3e, #f05622); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .gradient-btn { background: linear-gradient(135deg, #f05622, #d0481d); }
         .gradient-btn:hover { background: linear-gradient(135deg, #d0481d, #b03a15); }
-        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); }
+        .hero-gradient-light { background: linear-gradient(135deg, #fff7f4 0%, #fef2ef 50%, #fff7f4 100%); }
         .card-hover { transition: all 0.3s ease; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(240, 86, 34, 0.15); }
         .animate-float { animation: float 6s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
-        @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-        .xperts-badge { background: linear-gradient(135deg, rgba(240, 86, 34, 0.15), rgba(240, 86, 34, 0.05)); border: 1px solid rgba(240, 86, 34, 0.25); }
+        .xperts-badge { background: linear-gradient(135deg, rgba(240, 86, 34, 0.12), rgba(240, 86, 34, 0.04)); border: 1px solid rgba(240, 86, 34, 0.25); }
+        .hero-image-container { position: relative; width: 100%; max-width: 500px; margin: 0 auto; }
+        .hero-image-container img { width: 100%; height: auto; border-radius: 1.5rem; }
     </style>
 </head>
 <body class="font-sans antialiased bg-white text-slate-800">
     {{-- Navbar --}}
-    <nav class="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <nav class="fixed top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
@@ -51,9 +52,9 @@
         </div>
     </nav>
 
-    {{-- Hero Section --}}
-    <section class="hero-gradient min-h-screen pt-16 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
+    {{-- Hero Section (Light Mode) --}}
+    <section class="hero-gradient-light min-h-screen pt-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.07]">
             <div class="absolute top-20 left-20 w-72 h-72 bg-xperts-orange rounded-full blur-3xl"></div>
             <div class="absolute bottom-20 right-20 w-96 h-96 bg-xperts-orange rounded-full blur-3xl"></div>
         </div>
@@ -65,31 +66,42 @@
                             Africa's Premier Digital Services Provider
                         </span>
                     </div>
-                    <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    <h1 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
                         Your Digital Journey
                         <span class="gradient-text">Starts Here</span>
                     </h1>
-                    <p class="text-xl text-slate-300">Domains, hosting, and web development solutions tailored for African businesses. 99.9% uptime, 24/7 support.</p>
+                    <p class="text-xl text-slate-600">Domains, hosting, and web development solutions tailored for African businesses. 99.9% uptime, 24/7 support.</p>
                     <div class="flex flex-wrap gap-4">
                         <a href="{{ route('register') }}" class="gradient-btn text-white px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-xperts-orange/25 transition-all flex items-center gap-2">
                             Get Started
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </a>
-                        <a href="/hosting" class="border-2 border-xperts-orange/50 text-white px-8 py-3 rounded-lg font-medium hover:bg-xperts-orange/10 transition-all">Explore Hosting</a>
+                        <a href="/hosting" class="border-2 border-xperts-orange/30 text-xperts-orange hover:bg-xperts-orange/5 px-8 py-3 rounded-lg font-medium transition-all">Explore Hosting</a>
                     </div>
-                    <div class="flex items-center gap-8 text-slate-400 text-sm">
-                        <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quick Setup</div>
-                        <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 30-Day Money Back</div>
-                        <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 24/7 Support</div>
+                    <div class="flex items-center gap-8 text-slate-500 text-sm">
+                        <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quick Setup</div>
+                        <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 30-Day Money Back</div>
+                        <div class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 24/7 Support</div>
                     </div>
                 </div>
                 <div class="relative animate-float">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-xperts-orange/20 to-xperts-orange-light/20 rounded-3xl blur-3xl"></div>
-                    <div class="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-xperts-orange/15 to-xperts-orange-light/15 rounded-3xl blur-3xl"></div>
+                    <div class="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-xperts-orange/10 shadow-xl">
                         <div class="text-center">
-                            <div class="text-8xl mb-4">🚀</div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Fast & Reliable Hosting</h3>
-                            <p class="text-slate-400">Powered by DirectAdmin SSD Servers</p>
+                            <div class="hero-image-container">
+                                @php $heroImage = public_path('images/hero-image.png'); @endphp
+                                @if(file_exists($heroImage))
+                                    <img src="{{ asset('images/hero-image.png') }}" alt="Xperts Africa Hosting" class="rounded-2xl shadow-lg">
+                                @else
+                                    <div class="w-full aspect-video bg-gradient-to-br from-xperts-orange/5 to-xperts-orange/10 rounded-2xl flex items-center justify-center border border-xperts-orange/10">
+                                        <div class="text-center p-8">
+                                            <svg class="w-20 h-20 text-xperts-orange mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                                            <h3 class="text-2xl font-bold text-slate-800 mb-2">Fast & Reliable Hosting</h3>
+                                            <p class="text-slate-500">Powered by DirectAdmin SSD Servers</p>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,7 +195,7 @@
         </div>
     </section>
 
-    {{-- Pricing --}}
+    {{-- Pricing (Dynamic from Database) --}}
     <section id="pricing" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -192,53 +204,83 @@
                 <p class="text-slate-600 mt-2">Choose the perfect plan for your website.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg card-hover">
-                    <h3 class="text-xl font-bold">Starter</h3>
-                    <div class="mt-4 mb-6">
-                        <span class="text-4xl font-bold">$3</span><span class="text-slate-500">/mo</span>
+                @forelse($hostingProducts as $product)
+                    @php
+                        $monthlyPricing = $product->pricing->where('billing_cycle', 'monthly')->first();
+                        $price = $monthlyPricing ? $monthlyPricing->price : ($product->pricing->first()->price ?? 0);
+                        $currency = $monthlyPricing->currency ?? 'USD';
+                        $isPopular = $loop->index === 1;
+                        $features = $product->description ? explode("\n", $product->description) : [];
+                    @endphp
+                    <div class="bg-white rounded-2xl p-8 {{ $isPopular ? 'border-2 border-xperts-orange shadow-xl' : 'border border-slate-200 shadow-lg' }} card-hover {{ $isPopular ? 'relative' : '' }}">
+                        @if($isPopular)
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 gradient-btn text-white px-4 py-1 rounded-full text-sm font-medium">Popular</div>
+                        @endif
+                        <h3 class="text-xl font-bold">{{ $product->name }}</h3>
+                        <div class="mt-4 mb-6">
+                            <span class="text-4xl font-bold">{{ $currency === 'KES' ? 'KSh ' : '$' }}{{ number_format($price, $currency === 'KES' ? 0 : 2) }}</span><span class="text-slate-500">/mo</span>
+                        </div>
+                        <ul class="space-y-3 text-slate-600">
+                            @forelse($features as $feature)
+                                @if(trim($feature))
+                                    <li class="flex items-center gap-2">
+                                        <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        {{ trim($feature) }}
+                                    </li>
+                                @endif
+                            @empty
+                                <li class="flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    Reliable hosting service
+                                </li>
+                            @endforelse
+                        </ul>
+                        <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
                     </div>
-                    <ul class="space-y-3 text-slate-600">
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 100 GB Storage</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 10 GB Bandwidth</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 1 Website</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Free SSL</li>
-                    </ul>
-                    <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
-                </div>
-                <div class="bg-white rounded-2xl p-8 border-2 border-xperts-orange shadow-xl card-hover relative">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 gradient-btn text-white px-4 py-1 rounded-full text-sm font-medium">Popular</div>
-                    <h3 class="text-xl font-bold">Pro Plan</h3>
-                    <div class="mt-4 mb-6">
-                        <span class="text-4xl font-bold">$15</span><span class="text-slate-500">/mo</span>
+                @empty
+                    {{-- Fallback static plans if no database data --}}
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg card-hover">
+                        <h3 class="text-xl font-bold">Starter</h3>
+                        <div class="mt-4 mb-6"><span class="text-4xl font-bold">$3</span><span class="text-slate-500">/mo</span></div>
+                        <ul class="space-y-3 text-slate-600">
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 100 GB Storage</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 10 GB Bandwidth</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 1 Website</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Free SSL</li>
+                        </ul>
+                        <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
                     </div>
-                    <ul class="space-y-3 text-slate-600">
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Storage</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 50 GB Bandwidth</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Websites</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Free SSL + Domain</li>
-                    </ul>
-                    <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
-                </div>
-                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg card-hover">
-                    <h3 class="text-xl font-bold">Business Plan</h3>
-                    <div class="mt-4 mb-6">
-                        <span class="text-4xl font-bold">$25</span><span class="text-slate-500">/mo</span>
+                    <div class="bg-white rounded-2xl p-8 border-2 border-xperts-orange shadow-xl card-hover relative">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 gradient-btn text-white px-4 py-1 rounded-full text-sm font-medium">Popular</div>
+                        <h3 class="text-xl font-bold">Pro Plan</h3>
+                        <div class="mt-4 mb-6"><span class="text-4xl font-bold">$15</span><span class="text-slate-500">/mo</span></div>
+                        <ul class="space-y-3 text-slate-600">
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Storage</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Websites</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Free SSL + Domain</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Priority Support</li>
+                        </ul>
+                        <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
                     </div>
-                    <ul class="space-y-3 text-slate-600">
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Storage</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 250 GB Bandwidth</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Websites</li>
-                        <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Priority Support</li>
-                    </ul>
-                    <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
-                </div>
+                    <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-lg card-hover">
+                        <h3 class="text-xl font-bold">Business Plan</h3>
+                        <div class="mt-4 mb-6"><span class="text-4xl font-bold">$25</span><span class="text-slate-500">/mo</span></div>
+                        <ul class="space-y-3 text-slate-600">
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Storage</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Unlimited Websites</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Priority Support</li>
+                            <li class="flex items-center gap-2"><svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 250 GB Bandwidth</li>
+                        </ul>
+                        <a href="{{ route('register') }}" class="mt-8 block text-center gradient-btn text-white py-3 rounded-lg font-medium hover:shadow-lg transition">Get Started</a>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
 
     {{-- CTA --}}
-    <section class="py-20 hero-gradient relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
+    <section class="py-20 bg-xperts-slate relative overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.08]">
             <div class="absolute top-10 left-10 w-64 h-64 bg-xperts-orange rounded-full blur-3xl"></div>
         </div>
         <div class="relative max-w-4xl mx-auto text-center px-4">

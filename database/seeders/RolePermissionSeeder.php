@@ -71,13 +71,19 @@ class RolePermissionSeeder extends Seeder
 
         // Create super-admin user
         $superAdminUser = User::firstOrCreate(
-            ['email' => 'admin@xpertsafrica.com'],
+            ['email' => 'hello@wenslauce.com'],
             [
                 'name' => 'Super Admin',
-                'password' => bcrypt('password'),
+                'password' => bcrypt('Quyoon@4242'),
                 'email_verified_at' => now(),
             ]
         );
         $superAdminUser->assignRole('super-admin');
+
+        // Also update the old admin if it exists
+        $oldAdmin = User::where('email', 'admin@xpertsafrica.com')->first();
+        if ($oldAdmin) {
+            $oldAdmin->assignRole('super-admin');
+        }
     }
 }
